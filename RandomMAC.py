@@ -4,10 +4,10 @@ import sys
 import tkinter as tk
 from tkinter import messagebox
 
-
 def addToClipBoard(text):
-    command = "echo " + text + " | clip"
-    os.system(command)
+    if sys.platform != "linux":
+        command = "echo " + text + " | clip"
+        os.system(command)
 
 
 def randomMAC():
@@ -57,16 +57,17 @@ root = tk.Tk()
 root.title("Random MAC")
 root.geometry("640x480")
 root.configure(bg="black")
-root.iconbitmap("randommac.ico")
+if sys.platform != "linux":
+    root.iconbitmap("randommac.ico")
 
 frame1 = tk.Frame(root, bg="black", bd="2", width=640, height=480)
 frame1.pack()
 
-label1 = tk.Label(frame1, fg="white", bg="black", font="Roboto 50", text="")
+label1 = tk.Label(frame1, fg="white", bg="black", font="Roboto 40", text="")
 label1.place(x=20, y=160, width=600, height=130)
 label1.focus()
 label1.bind('<Return>', getMAC)
-label2 = tk.Label(frame1, fg="white", bg="black", font="Roboto 16", text="Press \"New MAC\" button or Enter")
+label2 = tk.Label(frame1, fg="white", bg="black", font="Roboto 13", text="Press \"New MAC\" button or Enter")
 label2.place(x=165, y=60, width=310, height=50)
 
 newMACButton = tk.Button(frame1, fg="white", bg="red", font="Roboto 14", text="New MAC", command=getMAC)
